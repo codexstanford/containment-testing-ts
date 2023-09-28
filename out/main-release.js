@@ -6,6 +6,7 @@ import { Variable } from "./epilog-ts/classes/Term.js";
 import { EpilogJSToTS } from "./epilog-ts/parsing/epilog-js-to-epilog-ts.js";
 const COVERS_PRED = new Predicate("covers");
 const SURROUNDING_QUERY_PRED = new Predicate("surroundingquerypred");
+const SURROUNDING_QUERY_PREFIX = SURROUNDING_QUERY_PRED + "(X) :- " + COVERS_PRED + "(";
 // activePolicies: A list of strings denoting the policies within which to check coverage.
 // coverageToCheck: A single provision of a flattened policy. Should always be of the form "covers({policyid}, Z) :- {body}"
 function cover(activePolicies, coverageToCheck, facts, rules) {
@@ -15,7 +16,7 @@ function cover(activePolicies, coverageToCheck, facts, rules) {
     let activePoliciesSurroundingRules = [];
     for (let policy of activePolicies) {
         // This rule ensures the only argument relevant to containment testing is the claim.
-        activePoliciesSurroundingRules.push(EpilogJSToTS.parseRule(read(SURROUNDING_QUERY_PRED + "(X) :- " + COVERS_PRED + "(" + policy + ", X)")));
+        activePoliciesSurroundingRules.push(EpilogJSToTS.parseRule(read(SURROUNDING_QUERY_PREFIX + policy + ", X)")));
         let flattenedPolicy = flatten(read((new Atom(COVERS_PRED, [EpilogJSToTS.parseConstant(policy), new Variable('Z')])).toString()), rules);
         for (let rule of flattenedPolicy) {
             activePoliciesAsFlattenedRules.push(EpilogJSToTS.parseRule(rule));
@@ -26,7 +27,7 @@ function cover(activePolicies, coverageToCheck, facts, rules) {
     // Will always be of the form "covers({policyid}, Z) :- {body}"
     let epilogTSCoverageToCheck = EpilogJSToTS.parseRule(coverageToCheck);
     // This rule ensures the only argument relevant to containment testing is the claim.
-    let coverageSurroundingRule = EpilogJSToTS.parseRule(read(SURROUNDING_QUERY_PRED + "(X) :- " + COVERS_PRED + "(" + epilogTSCoverageToCheck.head.args[0].toString() + ", X)"));
+    let coverageSurroundingRule = EpilogJSToTS.parseRule(read(SURROUNDING_QUERY_PREFIX + epilogTSCoverageToCheck.head.args[0].toString() + ", X)"));
     let queryToCheck = makeQuery(SURROUNDING_QUERY_PRED, [coverageSurroundingRule, epilogTSCoverageToCheck]);
     // Prints the queries being compared.
     // console.log("Query to check:", queryToCheck.toString());
