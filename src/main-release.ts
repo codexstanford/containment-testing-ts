@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let provisions : EpilogJSToTS.EpilogJSRule[] = flatten(read("covers(policy1695417536, Z)"), rules);
 
     cover(['policy1695417536'], provisions[0], [], rules); // Returns the correct answer on this
-    // cover(['policy1695417537'], provisions[0], [], rules);
+    // cover(['policy1695417537'], provisions[0], [], rules); // Times out on this
 });
 
 

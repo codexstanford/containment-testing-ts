@@ -63,6 +63,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let rules = definemorerules([], readdata('covers(Policy,Z) :- policy.type(Policy,codex_plana) & policy.insuree(Policy,I) & policy.startdate(Policy,PS) & policy.enddate(Policy,PE) & hospitalization.patient(Z,I) & hospitalization.hospital(Z,H) & hospital.country(H,usa) & hospitalization.startdate(Z,ZS) & hospitalization.enddate(Z,ZE) covers(Policy,Z) :- policy.type(Policy,codex_plana) & policy.insuree(Policy,I) & policy.startdate(Policy,PS) & policy.enddate(Policy,PE) & hospitalization.patient(Z,P) & person.spouse(P,I) & hospitalization.hospital(Z,H) & hospital.country(H,usa) & hospitalization.startdate(Z,ZS) & hospitalization.enddate(Z,ZE) covers(Policy,Z) :- policy.type(Policy,codex_plana) & policy.insuree(Policy,I) & policy.startdate(Policy,PS) & policy.enddate(Policy,PE) & hospitalization.patient(Z,P) & person.parent(P,I) & hospitalization.hospital(Z,H) & hospital.country(H,usa) & hospitalization.startdate(Z,ZS) & hospitalization.enddate(Z,ZE)'));
     let provisions = flatten(read("covers(policy1695417536, Z)"), rules);
     cover(['policy1695417536'], provisions[0], [], rules); // Returns the correct answer on this
-    // cover(['policy1695417537'], provisions[0], [], rules);
+    // cover(['policy1695417537'], provisions[0], [], rules); // Times out on this
 });
 //# sourceMappingURL=main-release.js.map
