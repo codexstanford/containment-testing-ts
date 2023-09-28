@@ -17,10 +17,13 @@ class ResolutionEngine {
     private clauseStrSet : Set<string>;
     private cnfOptions : CNFOptions;
 
+    private goalLine: number;
+
     constructor(cnfOptions : CNFOptions = {algorithm: "tseitins"}) {
         this.proofLines = [];
         this.clauseStrSet = new Set<string>();
         this.cnfOptions = cnfOptions;
+        this.goalLine = 0;
     }
 
     // Simply adds the input clauses to the proof. Does not filter out e.g. tautologies and identical clauses.
@@ -58,6 +61,8 @@ class ResolutionEngine {
     addGoal(goal : Formula) : void {
         let clausalNegatedGoal : Clause[] = toClausal(new Negation(goal), this.cnfOptions);
         
+        this.goalLine = this.proofLines.length;
+
         for (let c of clausalNegatedGoal) {
             if (c.isTautology()) {
                 continue;
@@ -85,7 +90,7 @@ class ResolutionEngine {
         let msStartTime : number = Date.now();
         let numResolutions : number = 0;
 
-        let slowPtr : number = 0;
+        let slowPtr : number = this.goalLine;
         
         //let tautologiesEliminated = 0;
         //let identicalClausesEliminated = 0;

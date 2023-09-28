@@ -6,6 +6,7 @@ class ResolutionEngine {
         this.proofLines = [];
         this.clauseStrSet = new Set();
         this.cnfOptions = cnfOptions;
+        this.goalLine = 0;
     }
     // Simply adds the input clauses to the proof. Does not filter out e.g. tautologies and identical clauses.
     addProofLines(clauses) {
@@ -34,6 +35,7 @@ class ResolutionEngine {
     // Filters out tautologies and identical clauses.
     addGoal(goal) {
         let clausalNegatedGoal = toClausal(new Negation(goal), this.cnfOptions);
+        this.goalLine = this.proofLines.length;
         for (let c of clausalNegatedGoal) {
             if (c.isTautology()) {
                 continue;
@@ -57,7 +59,7 @@ class ResolutionEngine {
     run({ msTimeout = null, maxResolutions = null, verbose = false }) {
         let msStartTime = Date.now();
         let numResolutions = 0;
-        let slowPtr = 0;
+        let slowPtr = this.goalLine;
         //let tautologiesEliminated = 0;
         //let identicalClausesEliminated = 0;
         while (slowPtr < this.proofLines.length) {

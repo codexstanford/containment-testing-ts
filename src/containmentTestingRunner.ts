@@ -25,6 +25,7 @@ function containmentTestingRunner(q1: Query, q2: Query, facts: Dataset, rules: R
     // Don't have a guaranteed containment testing procedure, so use the resolution tester
     containmentTester = new ResolutionContainmentTester();
     
+    // TODO: Update this to indicate the answer is correct when the tester terminates for a reason other than timeout or maxresolutions
     return [containmentTester.containedWithin(q1, q2), false];
 }
 
