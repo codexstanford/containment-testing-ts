@@ -49,8 +49,8 @@ function cover(
 
     let queryToCheck : Query = makeQuery(SURROUNDING_QUERY_PRED, [coverageSurroundingRule, epilogTSCoverageToCheck]);
     
-    console.log("Query to check:", queryToCheck.toString());
-    console.log("Active policies query:", activePoliciesQuery.toString());
+    // console.log("Query to check:", queryToCheck.toString());
+    // console.log("Active policies query:", activePoliciesQuery.toString());
 
     // --- facts and rules
     let epilogTSFacts : Dataset = EpilogJSToTS.parseDataset(facts);
@@ -63,7 +63,8 @@ function cover(
         // (ii) whether the containment testing procedure used was complete/whether a negative result is conclusive
     let testResult : [boolean, boolean] = containmentTestingRunner(queryToCheck, activePoliciesQuery, epilogTSFacts, epilogTSRules);
 
-    console.log(testResult);
+    console.log("Containment test answer:",testResult[0]);
+    console.log("Containment test was complete:",testResult[1]);
     // If containment is true, return true.
     if (testResult[0]) {
         return true;
