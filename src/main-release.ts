@@ -49,6 +49,7 @@ function cover(
 
     let queryToCheck : Query = makeQuery(SURROUNDING_QUERY_PRED, [coverageSurroundingRule, epilogTSCoverageToCheck]);
     
+    // Prints the queries being compared.
     // console.log("Query to check:", queryToCheck.toString());
     // console.log("Active policies query:", activePoliciesQuery.toString());
 

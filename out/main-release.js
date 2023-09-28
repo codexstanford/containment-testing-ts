@@ -28,6 +28,7 @@ function cover(activePolicies, coverageToCheck, facts, rules) {
     // This rule ensures the only argument relevant to containment testing is the claim.
     let coverageSurroundingRule = EpilogJSToTS.parseRule(read(SURROUNDING_QUERY_PRED + "(X) :- " + COVERS_PRED + "(" + epilogTSCoverageToCheck.head.args[0].toString() + ", X)"));
     let queryToCheck = makeQuery(SURROUNDING_QUERY_PRED, [coverageSurroundingRule, epilogTSCoverageToCheck]);
+    // Prints the queries being compared.
     // console.log("Query to check:", queryToCheck.toString());
     // console.log("Active policies query:", activePoliciesQuery.toString());
     // --- facts and rules
