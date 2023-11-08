@@ -33,7 +33,6 @@ class ResolutionContainmentTester {
         resolutionEngine.addPremises([EpilogTSToFOL.parseRuleset(new Ruleset(q2.rules))]);
         // --- Create the containment testing goal
         let contTestingGoal = bindFreeVars(new Implication(new Literal(standardizeRuleHead(q1.getQueryPredRules()[0]).head, false), new Literal(standardizeRuleHead(q2.getQueryPredRules()[0]).head, false)));
-        //console.log(contTestingGoal.toString());
         resolutionEngine.addGoal(contTestingGoal);
         resolutionEngine.printAllLines();
         let resolutionResult = resolutionEngine.run({ msTimeout: 10000, verbose: false });

@@ -3,17 +3,12 @@ import { Predicate } from "../epilog-ts/classes/Predicate.js";
 import { Query, makeQuery } from "../epilog-ts/classes/Query.js";
 import { Rule } from "../epilog-ts/classes/Rule.js";
 import { Ruleset } from "../epilog-ts/classes/Ruleset.js";
-import { Variable } from "../epilog-ts/classes/Term.js";
 import { EpilogTSToFOL } from "../epilog-ts/parsing/epilog-ts-to-fol.js";
 import { standardizeRuleHead } from "../epilog-ts/utils/standardize.js";
-import { Clause } from "../first-order-logic/classes/Clause.js";
 import { Formula } from "../first-order-logic/classes/Formula.js";
 import { Implication } from "../first-order-logic/classes/Implication.js";
-import { QuantifiedFormula, Quantifier } from "../first-order-logic/classes/QuantifiedFormula.js";
 import { ResolutionEngine } from "../first-order-logic/resolution/resolution-engine.js";
-import { toClausal } from "../first-order-logic/transformations/clausal.js";
 import { bindFreeVars } from "../first-order-logic/transformations/general.js";
-import { toPCNF } from "../first-order-logic/transformations/pnf.js";
 import { ContainmentTester } from "./containment-tester.js";
 
 class ResolutionContainmentTester implements ContainmentTester {
@@ -50,8 +45,6 @@ class ResolutionContainmentTester implements ContainmentTester {
         
         // --- Create the containment testing goal
         let contTestingGoal : Formula = bindFreeVars(new Implication(new Literal(standardizeRuleHead(q1.getQueryPredRules()[0]).head, false), new Literal(standardizeRuleHead(q2.getQueryPredRules()[0]).head, false)));
-        
-        //console.log(contTestingGoal.toString());
         
         resolutionEngine.addGoal(contTestingGoal);
         resolutionEngine.printAllLines();
